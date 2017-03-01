@@ -11,6 +11,8 @@ public class RedesController {
 
 	public static String IP(String Resultado) {
 		String NomeEndereco[] = new String[2];
+		NomeEndereco[0] = "";
+		NomeEndereco[1] = "";
 		Process exec;
 		int marcador = 0;
 		if (Resultado.startsWith("W")) {
@@ -20,9 +22,13 @@ public class RedesController {
 					String linha = "";
 					BufferedReader buf = new BufferedReader(new InputStreamReader(exec.getInputStream()));
 					while ((linha = buf.readLine()) != null) {
+						if (linha.contains("Adaptador") && NomeEndereco[0].contains("Ethernet")) {
+							NomeEndereco[0] = "";
+							marcador = 0;
+						}
 						if (linha.contains("Ethernet")) {
 							NomeEndereco[0] = String.valueOf(linha);
-							marcador =  1;
+							marcador = 1;
 						}
 						if (linha.contains("IPv4")) {
 							NomeEndereco[1] = String.valueOf(linha);
