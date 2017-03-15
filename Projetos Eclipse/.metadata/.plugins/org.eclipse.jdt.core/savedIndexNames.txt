@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+C:\Users\Weslley\Tracing\%Bin.it.mark%\Projetos Eclipse\.metadata\.plugins\org.eclipse.jdt.core
+2536468555.index
+735705145.index
