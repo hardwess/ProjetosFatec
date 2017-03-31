@@ -19,16 +19,17 @@ public class Controller extends Thread {
 	}
 
 	private void Login() {
-		int tempo = 30;
-		int acesso = (int) (Math.random() * 1951) + 50;
+		
+		System.out.println("Cliente: " + idCliente + " - Est√° logando.");
+		int tempo = (int) (Math.random() * 1951) + 50;
+		
 		try {
 			Thread.sleep(tempo);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		if (acesso < 1000) {
-			System.out.println("Cliente: " + idCliente + " Logou. (" + acesso
-					/ 1000d + " S)");
+		if (tempo < 1000) {
+			System.out.println("Cliente: " + idCliente + " - Logou. (" + tempo / 1000d + " S)");
 			try {
 				semaforo.acquire();
 				Compra();
@@ -38,27 +39,29 @@ public class Controller extends Thread {
 				semaforo.release();
 			}
 		} else {
-			System.out.println("Cliente: " + idCliente
-					+ " - Tempo de login expirado. (" + acesso / 1000d + " S)");
+			System.out.println("Cliente: " + idCliente + " - Tempo de login expirado. (" + tempo / 1000d + " S)");
 		}
 	}
 
 	private void Compra() {
-		System.out.println("Cliente: "+idCliente + " est· comprando.");
-		int acesso = (int) (Math.random() * 2000) + 1000;
-		if (acesso < 2500 && Ingressos > 0) {
-			int compra = (int) ((Math.random() * 4000) + 1000);
-			Ingressos -= compra / 1000;
-			System.out.println("Ciente: " + idCliente + " comprou " + compra
-					/ 1000 + " Ingressos, Restam " + Ingressos + " Ingressos");
-		} else if (acesso > 2500) {
-			System.out
-					.println("Cliente: " + idCliente
-							+ " - Tempo de compra expirado. (" + acesso / 1000d
-							+ " S)");
+		
+		System.out.println("Cliente: " + idCliente + " - est√° comprando.");
+		int tempo = (int) (Math.random() * 2000) + 1000;
+
+		try {
+			Thread.sleep(tempo);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		if (tempo < 2500 && Ingressos > 0) {
+			int compra = (int) ((Math.random() * 4) + 1);
+			Ingressos -= compra;
+			System.out.println(
+					"Ciente: " + idCliente + " - comprou " + compra + " Ingressos, Restam " + Ingressos + " Ingressos");
+		} else if (tempo > 2500) {
+			System.out.println("Cliente: " + idCliente + " - Tempo de compra expirado. (" + tempo / 1000d + " S)");
 		} else {
-			System.out.println("Cliente: " + idCliente
-					+ " N„o pode comprar, N„o h· mais ingressos.");
+			System.out.println("Cliente: " + idCliente + " - N√£o pode comprar, N√£o h√° mais ingressos.");
 		}
 	}
 }
