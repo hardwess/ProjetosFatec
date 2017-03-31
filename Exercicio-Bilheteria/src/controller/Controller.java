@@ -19,10 +19,10 @@ public class Controller extends Thread {
 	}
 
 	private void Login() {
-		
+
 		System.out.println("Cliente: " + idCliente + " - Está logando.");
 		int tempo = (int) (Math.random() * 1951) + 50;
-		
+
 		try {
 			Thread.sleep(tempo);
 		} catch (InterruptedException e) {
@@ -44,24 +44,33 @@ public class Controller extends Thread {
 	}
 
 	private void Compra() {
-		
+
 		System.out.println("Cliente: " + idCliente + " - está comprando.");
+
 		int tempo = (int) (Math.random() * 2000) + 1000;
+		int compra = (int) ((Math.random() * 4) + 1);
 
 		try {
 			Thread.sleep(tempo);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		if (tempo < 2500 && Ingressos > 0) {
-			int compra = (int) ((Math.random() * 4) + 1);
+		if (tempo < 2500 && Ingressos > compra) {
 			Ingressos -= compra;
-			System.out.println(
-					"Ciente: " + idCliente + " - comprou " + compra + " Ingressos, Restam " + Ingressos + " Ingressos");
-		} else if (tempo > 2500) {
-			System.out.println("Cliente: " + idCliente + " - Tempo de compra expirado. (" + tempo / 1000d + " S)");
+			System.out.println("Ciente: " + idCliente + " - comprou " + compra + " Ingressos, Restam " + Ingressos
+					+ " Ingressos)");
+		} else if (tempo < 2500 && Ingressos < compra && Ingressos != 0) {
+			while (compra > Ingressos) {
+				compra--;
+			}
+			System.out.println("Ciente: " + idCliente + " - comprou " + compra + " Ingressos, Restam " + Ingressos
+					+ " Ingressos)");
+			Ingressos -= compra;
+		} else if (Ingressos < compra) {
+			System.out.println("Cliente: " + idCliente
+					+ " - Não pôde comprar, Não há ingressos suficientes (Ingressos = " + Ingressos + " )");
 		} else {
-			System.out.println("Cliente: " + idCliente + " - Não pode comprar, Não há mais ingressos.");
+			System.out.println("Cliente: " + idCliente + " - Tempo de compra expirado. (" + tempo / 1000d + " S)");
 		}
 	}
 }
